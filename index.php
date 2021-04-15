@@ -26,7 +26,7 @@
                             <a href="#" id="me-nav" class="nav-item nav-link active">Site</a>
                             <a href="#" id="me-nav" class="nav-item nav-link active">Blog</a>
                             <a href="#" id="me-nav" class="nav-item nav-link active">Destaques</a>
-                            <a href="#" id="me-nav" class="nav-item nav-link active">Contato</a>
+                            <a href="cadastro.php" id="me-nav" class="nav-item nav-link active">Novo Artigo</a>
 
                         </div>
                     </div>
@@ -79,16 +79,43 @@
 
 
             </div>
-            <div class="container d-flex">
-                <div class="col-sm-8">
+            <main id="main" class="container d-flex">
+                <section class="col-sm-8">
                     Lado Left
-                </div>
-                <div class="col-sm-4">
-                    Lado right
-                </div>
-            </div>
+                </section>
+                <aside class="col-sm-4 d-flex flex-column align-items-center">
+                    <div class="title-aside h2 d-flex text-dark justify-content-center mt-3 mb-3 w-100 pt-3 pb-3 rounded-top bg-warning">
+                        Mazukim
+                    </div>
+                    <article class="card mb-3 text-center border-0" style="max-width: 19rem;">
+                            <div class="card-header h2  text-secondary border-0 m-0 p-0">Consultoria em Marketing Digital</div>
+                            <div class="card-body m-0">
+                               <img src="assets/images/marketing-digital.png" alt="Marketing Digital" >
+                            </div>
+                    </article>
+                    <article class="card mb-3 text-center border-0" style="max-width: 19rem;">
+                            <div class="card-header h2  text-secondary border-0 m-0 p-0">Consultoria em Facebook Ads</div>
+                            <div class="card-body m-0">
+                               <img src="assets/images/facebook.png" alt="Marketing Digital" >
+                            </div>
+                    </article>
+                    <article class="card mb-3 text-center border-0" style="max-width: 19rem;">
+                            <div class="card-header h2  text-secondary border-0 m-0 p-0">Consultoria em Instagram</div>
+                            <div class="card-body m-0">
+                               <img src="assets/images/instagram.png" alt="Marketing Digital" >
+                            </div>
+                    </article>
+                    <article class="card mb-3 text-center border-0" style="max-width: 19rem;">
+                            <div class="card-header h2 border-0 m-0 p-0">Conheça nossa agência</div>
+                            <div class="card-body ml-4">
+                                <p class="mb-4 font-weight-bold"> Seja Nosso Parceiro e Perfome Conosco no Mundo do Marketing Digital.</p>
+                                <a href="#" id="btn-aside" class="btn btn-warning text-dark btn-lg pl-3 pr-3"><strong>CONFIRA</strong> </a>
+                            </div>
+                    </article>
 
 
+                </aside>
+            </main>
         </div>
 
     <script type="text/javascript" src="assets/js/jquery-3.6.0.min.js"></script>
