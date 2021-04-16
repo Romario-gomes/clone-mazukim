@@ -1,9 +1,16 @@
 <?php 
     require ('assets/config/config.php');
+   
     //numero de itens por pagina
     $itens_page = 5;
-
-
+    if(isset($_GET['pagina']) && !empty($_GET['pagina'])){
+        $pagina = intval($_GET['pagina']);
+    }
+    $pagina = 0;
+    $sql = "SELECT * FROM  tb_post";
+    $sql = $pdo->query($sql);
+    $num_total = $sql->rowCount();
+    $num_paginas = ceil($num_total/$itens_page);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -99,126 +106,57 @@
                         </div>
                     </article>
                     <hr class="div-hr mt-3 mb-5">
-                    <a class="text-decoration-none" href="https://www.mazukim.com.br/blog/artigo/72/passo-a-passo-para-a-criacao-de-um-plano-de-marketing-efetivo">
-                        <article class="d-flex flex-direction-column">  
-                            <!-- Image article -->
-                            <div class="col-sm-4 pl-0">
-                                <img class="img-article" src="https://www.mazukim.com.br/blog/admin/images/materias/large/whatsapp-image-2020-12-07-at-19.28.18-1.png"  alt="Marketing afetivo">
-                            </div>
-                            <div class="cols-sm-8 pt-3">
-                                <!-- Title and Subtitle article -->
-                                <h2 class="title-article">Passo a Passo Para a Criação de um Plano de Marketing Efetivo.</h2>
-                                <p><small class="text-muted content-small">Por Romário Alves | 23 de Fevereiro de 2021 ás 13:51</small></p>
+                    <?php
+                        if($sql->rowCount() > 0){
+                            foreach($sql->fetchAll() as $post){
+                                date_default_timezone_set('America/Sao_Paulo');
+                                $data = strtotime($post['data_postagem']);
 
-                                <!-- Content article -->  
-                                <p class="content-article">Criar um planejamento estratégico de marketing efetivo é o primeiro passo para o resultado positivo desta campanha e acredite, não é fácil criar um bom planejamento de marketing é necessário estudo, preparo, dedicação, além de saber as etapas essenciais para um planejamento estruturado.</p>
-                                <!-- button article -->
-                                <div class="button-article d-flex align-items-center justify-content-center ">
-                                    <div class="btn btn-primary dropdown-toggle">Continuar Lendo </div>
-                                </div>
-                            </div>
-                            
-                            
+                                echo '<a class="text-decoration-none" href="https://www.mazukim.com.br/blog/artigo/72/passo-a-passo-para-a-criacao-de-um-plano-de-marketing-efetivo">
+                                    <article class="d-flex flex-direction-column">  
+                                        <div class="col-sm-4 pl-0">
+                                            <img class="img-article" src="'.$post['img'].'"  alt="'.$post['titulo'].'">
+                                        </div>
+                                        <div class="cols-sm-8 pt-3">
+                                            <h2 class="title-article">'.$post['titulo'].'</h2>
+                                            <p><small class="text-muted content-small">Por '.$post['autor'].' | '.date("d/m/Y",$data)." ás ".date("H:i",$data)   .'</small></p>
+                                            <p class="content-article">'.$post['conteudo'].'</p> 
+                                            <div class="button-article d-flex align-items-center justify-content-center ">
+                                                <div class="btn btn-primary dropdown-toggle">Continuar Lendo </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                        </a>
+                                        
+                                        <hr class="div-hr mt-3 mb-5"> ';
+                                    }
+                                }
+                            ?>
+                        <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="index.php?pagina=0">Anterior</a></li>
+                                    <?php
+                                        for($i=0;$i<$num_paginas;$i++){
+                                            $style = "";
+                                            if($pagina == $i){
+                                                $style = "active";
+                                            }
+                                    ?>
+                                            <li class="page-item <?php echo $style; ?>"><a class="page-link" href="index.php?pagina=<?php echo $i; ?>"><?php echo $i+1 ?></a></li>
+                                    <?php } ?>
+                                    
+                                        
+                                        <li class="page-item"><a class="page-link" href="index.php?pagina=<?php echo $num_paginas-1; ?>">Próximo</a></li>
+                                    </ul>
+                                </nav>
+                        
+                
+                    
 
-                        </article>
-                    </a>
+                    
 
-                    <hr class="div-hr mt-3 mb-5">
-                    <a class="text-decoration-none" href="https://www.mazukim.com.br/blog/artigo/71/marketing-para-advogados-no-google-ads-tudo-o-que-voce-precisa-saber-antes-de-comecar">
-                        <article class="d-flex flex-direction-column">  
-                            <!-- Image article -->
-                            <div class="col-sm-4 pl-0">
-                                <img class="img-article" src="https://www.mazukim.com.br/blog/admin/images/materias/large/marketing-juridico.png"  alt="Marketing para advogados">
-                            </div>
-                            <div class="cols-sm-8 pt-3">
-                                <!-- Title and Subtitle article -->
-                                <h2 class="title-article">Marketing Para Advogados no Google Ads: Tudo o Que Você Precisa Saber Antes de Começar!</h2>
-                                <p><small class="text-muted content-small">Por Romário Alves | 23 de Fevereiro de 2021 ás 13:51</small></p>
+                    
 
-                                <!-- Content article -->  
-                                <p class="content-article">Quando o assunto é Marketing Jurídico, há muitas restrições impostas pela OAB e por isso, muitos advogados têm receio de impulsionar seus anúncios e outros muitos acreditam que não é permitido fazer isso.</p>
-                                <!-- button article -->
-                                <div class="button-article d-flex align-items-center justify-content-center ">
-                                    <div class="btn btn-primary dropdown-toggle">Continuar Lendo </div>
-                                </div>
-                            </div>
-                        </article>
-                    </a>
-
-                    <hr class="div-hr mt-3 mb-5">
-                    <a class="text-decoration-none" href="https://www.mazukim.com.br/blog/artigo/70/otimizacao-de-sites-confira-8-dicas">
-                        <article class="d-flex flex-direction-column">  
-                            <!-- Image article -->
-                            <div class="col-sm-4 pl-0">
-                                <img class="img-article" src="https://www.mazukim.com.br/blog/admin/images/materias/large/otimizao-de-sites.png"  alt="Otimização de sites">
-                            </div>
-                            <div class="cols-sm-8 pt-3">
-                                <!-- Title and Subtitle article -->
-                                <h2 class="title-article">Otimização de Sites: Confira 8 Dicas.</h2>
-                                <p><small class="text-muted content-small">Por Romário Alves | 23 de Fevereiro de 2021 ás 13:51</small></p>
-
-                                <!-- Content article -->  
-                                <p class="content-article">Otimizar um site é um trabalho que pode ser desafiador, mas extremamente importante para um resultado saudável e duradouro para o seu negócio e lembre-se quando falamos em otimização para um site os esforços devem ser em três pilares o design, conteúdo e velocidade.</p>
-                                <!-- button article -->
-                                <div class="button-article d-flex align-items-center justify-content-center ">
-                                    <div class="btn btn-primary dropdown-toggle">Continuar Lendo </div>
-                                </div>
-                            </div>
-                            
-                            
-
-                        </article>
-                    </a>
-
-                    <hr class="div-hr mt-3 mb-5">
-                    <a class="text-decoration-none" href="https://www.mazukim.com.br/blog/artigo/69/o-que-e-inbound-marketing">
-                        <article class="d-flex flex-direction-column">  
-                            <!-- Image article -->
-                            <div class="col-sm-4 pl-0">
-                                <img class="img-article" src="https://www.mazukim.com.br/blog/admin/images/materias/large/inboud-marketing.png"  alt="Inbound Marketing">
-                            </div>
-                            <div class="cols-sm-8 pt-3">
-                                <!-- Title and Subtitle article -->
-                                <h2 class="title-article">O Que é Inbound Marketing?</h2>
-                                <p><small class="text-muted content-small">Por Romário Alves | 23 de Fevereiro de 2021 ás 13:51</small></p>
-
-                                <!-- Content article -->  
-                                <p class="content-article">O Inbound Marketing, também conhecido como Marketing de atração, é uma estratégia usada por milhões de empresas ao redor do mundo e usa a criação de conteúdo a fim de impactar o público correto e criar uma conexão com ele, para que em determinado momento passem a consumir nosso produto ou serviço.</p>
-                                <!-- button article -->
-                                <div class="button-article d-flex align-items-center justify-content-center ">
-                                    <div class="btn btn-primary dropdown-toggle">Continuar Lendo </div>
-                                </div>
-                            </div>
-                            
-                            
-
-                        </article>
-                    </a>
-
-                    <hr class="div-hr mt-3 mb-5">
-                    <a class="text-decoration-none" href="https://www.mazukim.com.br/blog/artigo/68/como-preparar-o-seu-negocio-para-vender-mais-na-black-friday-de-2020">
-                        <article class="d-flex flex-direction-column">  
-                            <!-- Image article -->
-                            <div class="col-sm-4 pl-0">
-                                <img class="img-article" src="https://www.mazukim.com.br/blog/admin/images/materias/large/black-friday-2020-1.png"  alt="Black friday">
-                            </div>
-                            <div class="cols-sm-8 pt-3">
-                                <!-- Title and Subtitle article -->
-                                <h2 class="title-article">Como Preparar o Seu Negócio Para Vender Mais na Black Friday de 2020.</h2>
-                                <p><small class="text-muted content-small">Por Romário Alves | 23 de Fevereiro de 2021 ás 13:51</small></p>
-
-                                <!-- Content article -->  
-                                <p class="content-article">Devido a pandemia do novo Coronavírus o ano de 2020 foi marcado por uma grande queda tanto nas vendas de produtos, quanto na prestação de serviços, e por isso a Black Friday que já é uma data importante para os negócios, tem esse ano sua importância dobrada.  </p>
-                                <!-- button article -->
-                                <div class="button-article d-flex align-items-center justify-content-center ">
-                                    <div class="btn btn-primary dropdown-toggle">Continuar Lendo </div>
-                                </div>
-                            </div>
-                            
-                            
-
-                        </article>
-                    </a>
 
                 </section>
                 <aside class="col-sm-4 d-flex flex-column align-items-center">
