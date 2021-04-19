@@ -16,7 +16,15 @@
 
 
         public function getAll(){
-            $sql = "SELECT * FROM tb_post";
+            $sql = "SELECT COUNT(*) as c FROM tb_post";
+            $sql = $this->pdo->query($sql);
+            $sql = $sql->fetch();
+            $total = $sql['c'];
+            $p=0;
+            $paginas = $total / 5;
+
+
+            $sql = "SELECT * FROM tb_post LIMIT $p, 5";
             $sql = $this->pdo->query($sql);
             
             if($sql->rowCount() > 0){

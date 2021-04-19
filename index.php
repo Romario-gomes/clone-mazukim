@@ -40,8 +40,6 @@
                         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
                     </form>
                 </div>
-               
-                
             </nav>
 
             <div class="col-sm-12 fundo-banner d-flex justify-content-between">
@@ -102,11 +100,32 @@
                     <hr class="div-hr mt-3 mb-5">
 
                     <?php 
-                        $dados = $post->getAll();
+                        /* 
+                        Calcular a quantidade total de paginas;
+                        Definir quantidade de itens por pagina;
+                        Criar a query utilizando o limite;
+                        */
 
-                        foreach($dados as $post){
-                            $data = strtotime($post['data_postagem']);
-                            $data = date("d/m/Y \á\s H:i:s", $data);
+
+                        $sql = "SELECT COUNT(*) as c FROM tb_post";
+                        $sql = $pdo->query($sql);
+                        $sql = $sql->fetch();
+                        $total = $sql['c'];
+                        $paginas = ceil($total / 5);
+                        $p=0;
+                        $pg = 1;
+                        if (isset($_GET['p']) && !empty($_GET['p'])){
+                            $pg = addslashes($_GET['p']);
+                        }
+                        $p = ($pg-1) * 5 ;
+
+                        $sql = "SELECT * FROM tb_post LIMIT $p, 5";
+                        $sql = $pdo->query($sql);
+
+                        if($sql->rowCount() > 0){
+                            foreach($sql->fetchAll() as $post){
+                                $data = strtotime($post['data_postagem']);
+                                $data = date("d/m/Y \á\s H:i:s", $data);
                     ?>
 
                     <a class="text-decoration-none" href="<?php echo $post['link_publicacao']; ?>">
@@ -131,9 +150,25 @@
                     </a>
 
                     <hr class="div-hr mt-3 mb-5">
-                    
-                  <?php } ?>
+                    <?php 
+                        } 
+                    } ?>  
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination ">
+                            <li class="page-item"><a class="page-link border-0" href="./?p=0">Primeira</a></li>
+                            <?php
+                                for($q=0;$q<$paginas;$q++){
+                                    $estilo = "";
 
+                                    if($q == $pg-1){
+                                        $estilo = "active";
+                                    }
+                                    echo '<li class="page-item border-0 '.$estilo.'"><a class="page-link border-0" href="./?p='.($q+1).'">'.($q+1).'</a></li>';
+                                }
+                            ?>
+                            <li class="page-item"><a class="page-link border-0" href="./?p=<?php echo $paginas ?>">Ultima</a></li>
+                        </ul>
+                    </nav>
                 </section>
                 <aside class="col-sm-4 d-flex flex-column align-items-center">
                     <div class="title-aside h2 d-flex text-dark justify-content-center mt-3 mb-3 w-100 pt-3 pb-3 rounded-top bg-warning">
