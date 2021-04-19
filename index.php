@@ -4,6 +4,7 @@
     //numero de itens por pagina
     
     $post = new Post();
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -99,6 +100,7 @@
                         </div>
                     </article>
                     <hr class="div-hr mt-3 mb-5">
+<<<<<<< HEAD
 
                     <?php 
                         $dados = $post->getAll();
@@ -132,6 +134,60 @@
                     <hr class="div-hr mt-3 mb-5">
                     
                   <?php } ?>
+=======
+                    <?php
+                        if($sql->rowCount() > 0){
+                            foreach($sql->fetchAll() as $post){
+                                date_default_timezone_set('America/Sao_Paulo');
+                                $data = strtotime($post['data_postagem']);
+
+                                echo '<a class="text-decoration-none" href="https://www.mazukim.com.br/blog/artigo/72/passo-a-passo-para-a-criacao-de-um-plano-de-marketing-efetivo">
+                                    <article class="d-flex flex-direction-column">  
+                                        <div class="col-sm-4 pl-0">
+                                            <img class="img-article" src="'.$post['img'].'"  alt="'.$post['titulo'].'">
+                                        </div>
+                                        <div class="cols-sm-8 pt-3">
+                                            <h2 class="title-article">'.$post['titulo'].'</h2>
+                                            <p><small class="text-muted content-small">Por '.$post['autor'].' | '.date("d/m/Y",$data)." ás ".date("H:i",$data)   .'</small></p>
+                                            <p class="content-article">'.$post['conteudo'].'</p> 
+                                            <div class="button-article d-flex align-items-center justify-content-center ">
+                                                <div class="btn btn-primary dropdown-toggle">Continuar Lendo </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                        </a>
+                                        
+                                        <hr class="div-hr mt-3 mb-5"> ';
+                                    }
+                                }
+                            ?>
+                        <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="index.php?pagina=0">Anterior</a></li>
+                                    <?php
+                                        for($i=0;$i<$num_paginas;$i++){
+                                            $style = "";
+                                            if($pagina == $i){
+                                                $style = "active";
+                                            }
+                                    ?>
+                                            <li class="page-item <?php echo $style; ?>"><a class="page-link" href="index.php?pagina=<?php echo $i; ?>"><?php echo $i+1 ?></a></li>
+                                    <?php } ?>
+                                    
+                                        
+                                        <li class="page-item"><a class="page-link" href="index.php?pagina=<?php echo $num_paginas-1; ?>">Próximo</a></li>
+                                    </ul>
+                                </nav>
+                        
+                
+                    
+
+                    
+
+                    
+
+
+>>>>>>> 8cf8f5a38b3d5e27906c8bbe546909f4c8a3f551
                 </section>
                 <aside class="col-sm-4 d-flex flex-column align-items-center">
                     <div class="title-aside h2 d-flex text-dark justify-content-center mt-3 mb-3 w-100 pt-3 pb-3 rounded-top bg-warning">
