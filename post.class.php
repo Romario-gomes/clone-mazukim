@@ -1,5 +1,4 @@
 <?php 
-    require './assets/config/config.php';
     class Post{
         private $id;
         private $titulo;
@@ -13,7 +12,6 @@
         public function __construct(){
             $this->pdo = new PDO("mysql:dbname=db_mazukim;host=localhost", "root", "");
         }
-
 
         public function getAll(){
             $sql = "SELECT COUNT(*) as c FROM tb_post";
@@ -33,8 +31,17 @@
                 return array();
             }
         }
+        public function getForId($id){
+            $sql = "SELECT * FROM tb_post WHERE id = ?";
+            $sql = $this->pdo->prepare($sql);
+            $sql->execute(array($id));
+            
+            if($sql->rowCount() > 0){
+                return $sql->fetch();
+            }else{
+                return array();
+            }
 
-
-
-
+        }
+    
     }

@@ -1,9 +1,12 @@
 <?php 
     require ('assets/config/config.php');
     require ('post.class.php');
+    require ('usuario.class.php');
+
     //numero de itens por pagina
     
     $post = new Post();
+    $usuario = new Usuario();
 
 ?>
 <!DOCTYPE html>
@@ -27,16 +30,15 @@
                 </button>
                 <div class="d-flex align-items-center">
                     <div class="navbar-collapse collapse" id="navbarMenu">
-                        <div class="navbar-nav">
-                            <a href="#" id="me-nav" class="nav-item nav-link active">Site</a>
-                            <a href="#" id="me-nav" class="nav-item nav-link active">Blog</a>
-                            <a href="#" id="me-nav" class="nav-item nav-link active">Destaques</a>
-                            <a href="cadastro.php" id="me-nav" class="nav-item nav-link active">Novo Artigo</a>
-
+                        <div class="navbar-nav mr-2">
+                            <a href="https://www.mazukim.com.br/index/" id="me-nav" class="nav-item nav-link active">Site</a>
+                            <a href="https://www.mazukim.com.br/blog/index/" id="me-nav" class="nav-item nav-link active">Blog</a>
+                            <a href="https://www.mazukim.com.br/blog/destaques/" id="me-nav" class="nav-item nav-link active">Destaques</a>
+                            <a href="https://www.mazukim.com.br/blog/contato/" id="me-nav" class="nav-item nav-link active">Contato</a>
                         </div>
                     </div>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control " type="search" placeholder="Pesquisar..." aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0" method="POST" >
+                        <input class="form-control " type="search" name="pesquisa" placeholder="Pesquisar..." aria-label="Search">
                         <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
                     </form>
                 </div>
@@ -48,9 +50,9 @@
                         <div>
                             <h3 class="title">CADASTRE-SE PARA RECEBER CONTEÚDO EM PRIMEIRA MÃO!</h3>   
                         </div>
-                        <form class="form col my-2 my-lg-0">
+                        <form class="form col my-2 my-lg-0" method="POST">
                             <div class="col d-flex">
-                                <input id="email" class="form-control mr-2 " type="search" placeholder="Seu E-mail*" aria-label="email" required>
+                                <input id="email" class="form-control mr-2 " type="search" name="email" placeholder="Seu E-mail*" aria-label="email" required>
                                 <button class="btn btn-email my-2 my-sm-0" type="submit">Enviar</button>
                             </div>     
                         </form>
@@ -79,24 +81,31 @@
                         </div>
                     </div>                
                 </nav>
-
-
             </div>
             <main id="main" class="container-fluid d-flex pl-5 pr-5">
                 <section class="col-sm-8">
-                    <article class="card mb-3 border-0">
-                        <img class="card-img-top" src="https://mazukim.com.br/blog/admin/images/materias/large/mobile-first.png" alt="Card image cap">
-                        <div class="card-body">
-                            <h2 class="card-title title-card-article">O Google Irá Priorizar a Indexação Para Mobile - Mobile First até Março de 2021</h2>
-                            <p class="card-text content-card font-weight-normal">O movimento do mobile first não é novo, mas agora todos terão que se adaptar ou perderá posições!</p>
-                            <p class="card-text"><small class="text-muted content-small">Por Romário Alves | 23 de Fevereiro de 2021 ás 13:51</small></p>
-                        </div>
-                        <div class="card-footer d-flex justify-content-center border-0 align-items-center">
-                            <a href="" class="btn btn-outline-primary dropdown-toggle">
-                                Continuar Lendo
-                            </a>
-                        </div>
-                    </article>
+                    <?php 
+                        $postagem = $post->getForId(1);
+                        $data = strtotime($postagem['data_postagem']);
+                        $data = date("d/m/Y \á\s H:i:s", $data);
+                    ?>
+
+                    <a href="" class="text-decoration-none">
+                        <article class="card mb-3 border-0">
+                            <img class="card-img-top" src="<?php echo $postagem['img']; ?>" alt="<?php echo $postagem['titulo']; ?>">
+                            <div class="card-body">
+                                <h2 class="card-title title-card-article"><?php echo $postagem['titulo']; ?></h2>
+                                <p class="card-text content-card font-weight-normal content-first-article"><?php echo $postagem['conteudo']; ?></p>
+                                <p class="card-text"><small class="text-muted content-small">Por <?php echo $postagem['autor']; ?> | <?php echo $data; ?></small></p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-center border-0 align-items-center">
+                                <a href="" class="btn btn-outline-primary dropdown-toggle">
+                                    Continuar Lendo
+                                </a>
+                            </div>
+                        </article>
+                    </a>
+                   
                     <hr class="div-hr mt-3 mb-5">
 
                     <?php 
@@ -105,9 +114,7 @@
                         Definir quantidade de itens por pagina;
                         Criar a query utilizando o limite;
                         */
-
-
-                        $sql = "SELECT COUNT(*) as c FROM tb_post";
+                        $sql = "SELECT COUNT(*) as c FROM tb_post WHERE id > 1";
                         $sql = $pdo->query($sql);
                         $sql = $sql->fetch();
                         $total = $sql['c'];
@@ -119,7 +126,7 @@
                         }
                         $p = ($pg-1) * 5 ;
 
-                        $sql = "SELECT * FROM tb_post LIMIT $p, 5";
+                        $sql = "SELECT * FROM tb_post WHERE id > 1  LIMIT $p, 5";
                         $sql = $pdo->query($sql);
 
                         if($sql->rowCount() > 0){
@@ -153,7 +160,7 @@
                     <?php 
                         } 
                     } ?>  
-                    <nav aria-label="Page navigation">
+                    <nav aria-label="Page navigation" class="d-flex justify-content-center">
                         <ul class="pagination ">
                             <li class="page-item"><a class="page-link border-0" href="./?p=0">Primeira</a></li>
                             <?php
@@ -207,12 +214,73 @@
                         </article>
                 </aside>
             </main>
-        </div>
 
+            <section class="container-fluid bg-secondary">
+                <div class="container d-flex flex-column justify-content-center align-items-center pt-5 pb-5">
+                    <div class="col-sm-8 text-white text-center title-section">
+                        <p class="h2 m-0">QUER CONTINUAR CONSUMINDO CONTEÚDO PRODUZIDO PELO TIME DA AGÊNCIA MAZUKIM?</p> 
+                        <p class="subtitle-section">Cadastre-se e Receba Conteúdo de Marketing Digital por E-mail. Vamos Perfomar!</p> 
+                    </div>
+                    <form class="form" method="POST">
+                            <div class="col-sm-12 d-flex">
+                                <input id="email-section" class="form-control mr-2 " type="search" placeholder="Seu E-mail*" name="email" aria-label="email" required>
+                                <button class="btn btn-section-email my-2 my-sm-0 text-secondary font-weight-bold" type="submit">Eu quero!</button>
+                            </div>     
+                    </form>
+                </div>
+                <?php 
+                    if(isset($_POST['email']) && !empty($_POST['email'])){
+                        $email = addslashes($_POST['email']);
+                        $usuario->getEmail($email);
+                    }    
+                ?>
+
+
+            </section>
+            <footer class="container-fluid">
+                <div class="container p-0">
+                    <div class="row pt-5">
+                        <div class="col-sm-6 d-flex flex-column justify-content-between p-0">
+                            <div class="row"><img src="./assets/images/logomazukim.png" width="250" alt="Mazukim"></div>
+                            <div class="row title-section"> <p class="subtitle-footer">Acreditamos que o Marketing Digital potencializa o empreendedorismo no Brasil. <strong>Nós queremos ajudar você também.</strong></p></div>
+                        </div>
+                        <div class="col ml-2">
+                            <h3>Categorias</h3>
+                            <nav>
+                                <ul class="menu-footer">
+                                    <li><a href="https://www.mazukim.com.br/blog/categoria/49/dicas-de-marketing">Dicas de marketing</a></li>
+                                    <li><a href="https://www.mazukim.com.br/blog/categoria/43/facebook">Facebook</a> </li>
+                                    <li><a href="https://www.mazukim.com.br/blog/categoria/45/google-ads">Google Ads</a></li>
+                                    <li><a href="https://www.mazukim.com.br/blog/categoria/42/instagram">Instagram</a></li>
+                                    <li><a href="https://www.mazukim.com.br/blog/categoria/50/noticias">Notícias</a></li>
+                                    <li><a href="https://www.mazukim.com.br/blog/categoria/39/seo">SEO</a></li>
+                                </ul>
+
+                            </nav>
+                        
+                        </div>
+                        <div class="col">
+                            <h3>Agência Mazukim</h3>
+                            <nav>
+                                <ul class="menu-footer">
+                                    <li><a href="https://www.mazukim.com.br/quemsomos/">Sobre</a></li>
+                                    <li><a href="https://www.facebook.com/AgenciaMazukim">Página do facebook</a> </li>
+                                    <li><a href="https://www.instagram.com/agenciamazukim">Instagram</a></li>
+                                    <li><a href="https://www.mazukim.com.br/" class="btn btn-info mt-2 ">CONSULTORIA MARKETING</a></li>
+                                </ul>
+
+                            </nav>
+                        </div>
+                        
+                    </div>
+                </div>
+                <hr class="div-hr mt-3 mb-5 ml-5 mr-5">
+
+                <p class="h5 text-center mb-3">Site desenvolvido apenas para fins de estudos.</p>
+            </footer> 
+
+        </div>                              
     <script type="text/javascript" src="assets/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-
-
