@@ -22,34 +22,72 @@
 
     </head>
     <body>
-        <div class="container-fluid p-0">
-            <nav class="navbar navbar-expand-md navbar-light justify-content-between align-items-center">
-                <a href="" class="navbar-brand"><img class="img-logo" src="assets/images/logomazukim.png" alt="Mazukim"></a>
+    <header>
+    <nav class="navbar navbar-expand-lg navbar-light justify-content-between align-items-center">
+                <a href="" class="navbar-brand col-lg col-md-10 col-sm-10 col-sx-10"><img class="img-logo" src="assets/images/logomazukim.png" alt="Mazukim"></a>
                 <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="d-flex align-items-center">
                     <div class="navbar-collapse collapse" id="navbarMenu">
-                        <div class="navbar-nav mr-2">
+                        <div class="navbar-nav mr-auto">
                             <a href="https://www.mazukim.com.br/index/" id="me-nav" class="nav-item nav-link active">Site</a>
                             <a href="https://www.mazukim.com.br/blog/index/" id="me-nav" class="nav-item nav-link active">Blog</a>
                             <a href="https://www.mazukim.com.br/blog/destaques/" id="me-nav" class="nav-item nav-link active">Destaques</a>
                             <a href="https://www.mazukim.com.br/blog/contato/" id="me-nav" class="nav-item nav-link active">Contato</a>
                         </div>
+
+                        <form class="form-inline mt-2 mt-md-0" method="POST" >
+                            <input class="form-control col-sm-8 " type="search" name="pesquisa" placeholder="Pesquisar..." aria-label="Search">
+                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+                        </form>
+
                     </div>
-                    <form class="form-inline my-2 my-lg-0" method="POST" >
-                        <input class="form-control " type="search" name="pesquisa" placeholder="Pesquisar..." aria-label="Search">
-                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
-                    </form>
+                    
                 </div>
             </nav>
 
+
+      <!-- <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Carousel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="d-flex flex-row-reverse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
+        </div>
+          
+          <form class="form-inline mt-2 mt-md-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav> -->
+    </header>
+
+
+
+
+
+        <div class="container-fluid p-0">
+            
+
             <div class="col-sm-12 fundo-banner d-flex justify-content-between">
-                <div class="col-sm-8 d-flex justify-content-center flex-column align-items-center">
+                <div class="col-sm-8 d-flex flex-column justify-content-center  align-items-center">
                     <div>
-                        <div>
-                            <h3 class="title">CADASTRE-SE PARA RECEBER CONTEÚDO EM PRIMEIRA MÃO!</h3>   
-                        </div>
+                        <h3 class="title text-center">CADASTRE-SE PARA RECEBER CONTEÚDO EM PRIMEIRA MÃO!</h3>   
+                        
                         <form class="form col my-2 my-lg-0" method="POST">
                             <div class="col d-flex">
                                 <input id="email" class="form-control mr-2 " type="search" name="email" placeholder="Seu E-mail*" aria-label="email" required>
@@ -57,6 +95,7 @@
                             </div>     
                         </form>
                     </div>
+                        
                 </div>
                 <div class="col-sm-4">
                     <div class="banner">    
@@ -83,7 +122,7 @@
                 </nav>
             </div>
             <main id="main" class="container-fluid d-flex pl-5 pr-5">
-                <section class="col-sm-8">
+                <section class="col-md-12">
                     <?php 
                         $postagem = $post->getForId(1);
                         $data = strtotime($postagem['data_postagem']);
@@ -136,9 +175,10 @@
                     ?>
 
                     <a class="text-decoration-none" href="<?php echo $post['link_publicacao']; ?>">
-                        <article class="d-flex flex-direction-column">  
+                        <article class="d-flex flex-direction-row">  
                             <!-- Image article -->
                             <div class="col-sm-4 pl-0">
+                            
                                 <img class="img-article" src="<?php echo $post['img']; ?>"  alt="<?php echo $post['titulo']; ?>">
                             </div>
                             <div class="cols-sm-8 pt-3">
@@ -177,7 +217,7 @@
                         </ul>
                     </nav>
                 </section>
-                <aside class="col-sm-4 d-flex flex-column align-items-center">
+                <aside class="col-sm-4  d-flex flex-column align-items-center d-md-none d-lg-block">
                     <div class="title-aside h2 d-flex text-dark justify-content-center mt-3 mb-3 w-100 pt-3 pb-3 rounded-top bg-warning">
                         Mazukim
                     </div>
@@ -193,7 +233,7 @@
                         <article class="card mb-3 text-center border-0" style="max-width: 19rem;">
                                 <div class="card-header h2  text-secondary border-0 m-0 p-0">Consultoria em Facebook Ads</div>
                                 <div class="card-body m-0">
-                                <img src="assets/images/facebook.png" alt="Marketing Digital" >
+                                    <img src="assets/images/facebook.png" alt="Marketing Digital" >
                                 </div>
                         </article>
                     </a>
@@ -237,7 +277,7 @@
 
 
             </section>
-            <footer class="container-fluid">
+            <footer class="container-fluid pl-5 pr-5">
                 <div class="container p-0">
                     <div class="row pt-5">
                         <div class="col-sm-6 d-flex flex-column justify-content-between p-0">
