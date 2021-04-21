@@ -13,6 +13,21 @@
             $sql->execute(array($email));
         }
 
+        public function searchForWord($palavra){
+            $sql = "SELECT * FROM tb_post WHERE nome LIKE ?";
+            $sql = $this->pdo->prepare($sql);
+            $sql->execute(array("%$palavra%"));
+
+            if($sql->rowCount() > 0){
+                return $sql->fetch();
+            }else{
+                return array();
+            }
+
+
+        }
+
+
     }
 
 
