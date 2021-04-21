@@ -1,0 +1,114 @@
+*{
+    margin:0;
+    padding: 0;
+}
+
+#me-nav{
+    color: #666;
+}
+#me-nav:hover{
+    background-color: #17829C;
+    color: white;
+    transition: 0.5s;
+}
+.img-logo{
+    width: 300px;
+}
+.fundo-banner{
+    background-color: #019BC7;
+}
+.btn-email{
+    background-color: #EAE700;
+    color: #019BC7;
+}
+.title{
+    color: white;
+    margin-bottom: 20px;
+}
+.banner{
+    width: 100%;
+    height: 400px;
+
+}
+.title-main{
+    margin-top: 20px;
+}
+#email{
+    height: 45px;
+}
+#email-section{
+    height: 45px;
+}
+#main{
+    margin: 0;
+    padding: 0;
+}
+#btn-aside{
+    width: 200px;
+}
+#btn-aside:hover{
+    background-color: #019BC7;
+    transition: 0.5s;
+    border-color: #019BC7;
+}
+.title-card-article{
+    color: #000;
+}
+.content-card{
+    font-size:  20px;
+}
+.content-small{
+    color: #555;
+    font-size: 15px;
+}
+.img-article{
+    width: 100%;
+    height: 300px;
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
+}
+.div-hr{
+    background-color: #bbb;
+}
+.title-article{
+    color:black;
+    font-size: 29px;
+    margin: 0;
+}
+.content-article{
+    color:black;
+    font-size: 16px;
+}
+.content-first-article{
+    color:black;
+}
+.title-section{
+    font-family: 'bahnschrift';
+}
+.subtitle-section{
+    font-size: 18px;
+}
+.btn-section-email{
+    background-color: #EAE700;
+}
+.btn-section-email:hover{
+    background-color: #c8c700;
+    transition: 0.3s;
+}
+.subtitle-footer{
+    font-size: 19px;
+}
+.menu-footer{
+    list-style: none;
+}
+.menu-footer a{
+    text-decoration: none;
+}
+
+@media(max-width: 768px){
+    main{
+        flex-direction: column;
+    }
+    
+}
