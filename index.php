@@ -47,11 +47,6 @@
                 </div>
             </nav>
     </header>
-
-
-
-
-
         <div class="container-fluid p-0">
             <div class="row fundo-banner m-0">
                 <div class="col col-lg-8 col-12 p-0 d-flex flex-column align-items-center justify-content-center">
@@ -132,42 +127,21 @@
                             $pg = addslashes($_GET['p']);
                         }
                         $p = ($pg-1) * 5 ;
+                        if(isset($_POST['pesquisa']) && !empty($_POST['pesquisa'])){
+                            $palavra = addslashes($_POST['pesquisa']);
+                            $resultado = $post->getForSearch($palavra);
+        
+                            $post->exibir($resultado, $p);
+                        }else{
+                            $sql = "SELECT * FROM tb_post WHERE id > 1  LIMIT $p, 5";
+                            $sql = $pdo->query($sql);
 
-                        $sql = "SELECT * FROM tb_post WHERE id > 1  LIMIT $p, 5";
-                        $sql = $pdo->query($sql);
-
-                        if($sql->rowCount() > 0){
-                            foreach($sql->fetchAll() as $post){
-                                $data = strtotime($post['data_postagem']);
-                                $data = date("d/m/Y \á\s H:i:s", $data);
-                    ?>
-
-                    <a class="text-decoration-none" href="<?php echo $post['link_publicacao']; ?>">
-                        <article class="row">  
-                            <!-- Image article -->
-                            <div class="col-md-4 pl-0">
-                            
-                                <img class="img-article" src="<?php echo $post['img']; ?>"  alt="<?php echo $post['titulo']; ?>">
-                            </div>
-                            <div class="col-md-8 pt-3">
-                                <!-- Title and Subtitle article -->
-                                <h2 class="title-article"><?php echo $post['titulo']; ?></h2>
-                                <p><small class="text-muted content-small">Por <?php echo $post['autor']; ?> | <?php echo $data ?></small></p>
-
-                                <!-- Content article -->  
-                                <p class="content-article"> <?php echo $post['conteudo']; ?> </p>
-                                <!-- button article -->
-                                <div class="button-article d-flex align-items-center justify-content-center ">
-                                    <div class="btn btn-primary dropdown-toggle">Continuar Lendo </div>
-                                </div>
-                            </div>
-                        </article>
-                    </a>
-
-                    <hr class="div-hr mt-3 mb-5">
-                    <?php 
-                        } 
-                    } ?>  
+                            if($sql->rowCount() > 0){
+                                $posts = $sql->fetchAll();
+                            }
+                            $post->exibir($posts, $p);
+                    } 
+                    ?>  
                     <nav aria-label="Page navigation" class="d-flex justify-content-center">
                         <ul class="pagination ">
                             <li class="page-item"><a class="page-link border-0" href="./?p=0">Primeira</a></li>
